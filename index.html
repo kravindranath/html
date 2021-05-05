@@ -89,7 +89,6 @@ body{
                     const sessions = (item.sessions) || [];
                     for(let i = 0; i <= sessions.length; i++){
                         var sessItem = sessions[i] || {};
-                        console.log(sessItem)
                         if(sessItem) {
                             var center_id = sessItem.center_id || '';
                             var name = sessItem.name || '';
@@ -99,9 +98,11 @@ body{
                             var available_capacity = sessItem.available_capacity || 0;
                             var availableClassName = available_capacity > 0 ? 'available' : 'not-available';
                             var min_age_limit = sessItem.min_age_limit ? (sessItem.min_age_limit+'+') : '';
+                            var addrSht = block_name.replace(/\s/g,'+') + '+' + item.pincode;
+                            var googl = '<a target="_blank" href="https://www.google.com/maps/search/'+addrSht+'">on Google</a>';
                             if(sessItem.session_id) {
                                 items.push(
-                                    '<div class="card '+availableClassName+'" key='+key+'-'+center_id+'><h3><span class="fee_type">'+fee_type+'</span>'+name+'</h3><ul><li>Vaccine: '+vaccine+'</li><li>Block: '+block_name+'</li><li>Availability: '+available_capacity+'</li><li>Minimum Age: '+min_age_limit+'</li></ul></div>'
+                                    '<div class="card '+availableClassName+'" key='+key+'-'+center_id+'><h3><span class="fee_type">'+fee_type+'</span>'+name+'</h3><ul><li>Vaccine: '+vaccine+'</li><li>Block: '+block_name+'</li><li>Availability: '+available_capacity+'</li><li>Minimum Age: '+min_age_limit+'</li><li>Map: '+googl+'</li></ul></div>'
                                 );
                             }
                         }
