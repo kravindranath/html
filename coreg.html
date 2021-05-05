@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="refresh" content="5">
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    </head>
+<style>
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #eee;
+}
+
+.card{
+    font-size: 0.8em;
+    padding: 10px;
+    background: #f9f9f9;
+    margin-bottom: 20px;
+    max-width: 240px;
+    position: relative;
+    opacity: 0.7;
+    border: 1px solid #ddd;
+}
+.card .fee_type{
+    padding: 2px 4px;
+    background-color: black;
+    color: white;
+    margin-right: 5px;
+    display: inline-block;
+    top: 0;
+    left: 0;
+    font-size: 0.75em;
+    position: absolute;
+}
+.card ul{
+    line-height: 20px;
+}
+.card.available{
+    opacity: 1;
+    background-color: rgb(130, 202, 130);
+}
+.list{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+.list > div{
+    min-width: 240px;
+}
+</style>
+<body>
+    <div class="home">
+        <h1>Centers</h1>
+        <div class="layout">
+            <div class="list"></div>
+        </div>
+    </div>
+<script>
+    function getDateParam(){
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; 
+        var yyyy = today.getFullYear();
+        if(dd<10)
+        {
+            dd='0'+dd;
+        } 
+
+        if(mm<10) 
+        {
+            mm='0'+mm;
+        } 
+        today = mm+'-'+dd+'-'+yyyy;
+        return today;
+    }
+    function getAPI(){
+        const dateParam = getDateParam();
+        const url = 'https://cdn-api.co-vin.in/api/v2/appointment/sessions/calendarByDistrict?district_id=303&date='+dateParam;
+        $.getJSON(url, function( data ) {
+            var centers = (data && data.centers) || [];
+                var items = [];
+                $.each( centers, function( key, item ) {
+                    const center_id = item.center_id || '';
+                    const name = item.name || '';
+                    const fee_type = item.fee_type || '';
+                    const block_name = item.block_name || '';
+                    const sessionsFirst = (item.sessions && item.sessions[0]) || {};
+                    const availableClassName = sessionsFirst.available_capacity > 0 ? 'available' : 'not-available';
+
+                    if(name && block_name) {
+                        items.push(
+                            '<div class="card '+availableClassName+'" key='+key+'-'+center_id+'><h3><span class="fee_type">'+fee_type+'</span>'+name+'</h3><ul><li>Vaccine: ${sessionsFirst.vaccine}</li><li>Block: '+block_name+'</li><li>Availability: '+sessionsFirst.available_capacity+'</li><li>Minimum Age: '+sessionsFirst.min_age_limit+'</li></ul></div>'
+                        );
+                    }
+                });
+                $('.list').html(items);
+        });
+    }
+$( document ).ready(function() {
+    getAPI();
+});
+</script>
+</body>
+</html>
