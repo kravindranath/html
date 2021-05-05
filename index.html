@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="refresh" content="5">
+        <meta http-equiv="refresh" content="500000">
         <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+        <meta content="width=device-width, initial-scale=1" name="viewport" />
+
     </head>
-<style>
+<style type="text/css">
 body{
     font-family: Arial, Helvetica, sans-serif;
     background-color: #eee;
@@ -45,6 +47,11 @@ body{
 }
 .list > div{
     min-width: 240px;
+}
+@media screen and (max-width: 768px) {
+  .list > div {
+      max-width: 240px;
+  }
 }
 </style>
 <body>
