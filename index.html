@@ -98,8 +98,9 @@ body{
                             const vaccine = sessItem.vaccine || '';
                             const available_capacity = sessItem.available_capacity || 0;
                             const availableClassName = available_capacity > 0 ? 'available' : 'not-available';
+                            const min_age_limit = sessItem.min_age_limit ? (sessItem.min_age_limit+'+') : '';
                             items.push(
-                                '<div class="card '+availableClassName+'" key='+key+'-'+center_id+'><h3><span class="fee_type">'+fee_type+'</span>'+name+'</h3><ul><li>Vaccine: '+vaccine+'</li><li>Block: '+block_name+'</li><li>Availability: '+available_capacity+'</li><li>Minimum Age: '+sessItem.min_age_limit+'+</li></ul></div>'
+                                '<div class="card '+availableClassName+'" key='+key+'-'+center_id+'><h3><span class="fee_type">'+fee_type+'</span>'+name+'</h3><ul><li>Vaccine: '+vaccine+'</li><li>Block: '+block_name+'</li><li>Availability: '+available_capacity+'</li><li>Minimum Age: '+min_age_limit+'</li></ul></div>'
                             );
                         }
                     }
